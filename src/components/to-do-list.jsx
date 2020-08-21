@@ -3,13 +3,14 @@ import React from "react";
 class ToDoList extends React.Component {
   state = {
     list: [
-      { task: "Clean house", DateDue: "01 / 09 / 2020" },
-      { task: "Wash dishes", DateDue: "23 / 09 / 2020" },
-      { task: "Go shopping", DateDue: "16 / 09 / 2020" },
+      { task: "Clean house", DateDue: "01 / 09 / 2020", priority: "!" },
+      { task: "Wash dishes", DateDue: "23 / 09 / 2020", priority: "!!" },
+      { task: "Go shopping", DateDue: "16 / 09 / 2020", priority: "!!!" },
     ],
     invalid: false,
     task: "",
     dateDue: "",
+    priority: "",
   };
 
   componentDidMount() {
@@ -19,6 +20,7 @@ class ToDoList extends React.Component {
   handleSubmit = (submitEvent) => {
     submitEvent.preventDefault();
     if (this.state.invalid) {
+      const priority = this.state.priority;
       const task = this.state.task;
       const date = this.state.dateDue.split("-").reverse();
       const formattedDate = date.map((num, index) => {
@@ -36,7 +38,11 @@ class ToDoList extends React.Component {
         return {
           invalid: !currentState.invalid,
           list: [
-            { task: capitalisedWord, DateDue: formattedDate.join("") },
+            {
+              task: capitalisedWord,
+              DateDue: formattedDate.join(""),
+              priority: priority,
+            },
             ...currentState.list,
           ],
           task: "",
@@ -96,10 +102,17 @@ class ToDoList extends React.Component {
     });
   };
 
-  handleDate = (inputEvent) => {
-    const input = inputEvent.target.value;
+  handleDate = (changeEvent) => {
+    const input = changeEvent.target.value;
     this.setState((currentState) => {
       return { dateDue: input };
+    });
+  };
+
+  handlePriority = (changeEvent) => {
+    const input = changeEvent.target.value;
+    this.setState(() => {
+      return { priority: input };
     });
   };
 
@@ -124,7 +137,7 @@ class ToDoList extends React.Component {
         </div>
         <form onSubmit={this.handleSubmit} className="form">
           <label>
-            Add to checklist with optional due date:
+            Add task to checklist with optional due date and priority mark:
             <input
               type="text"
               onChange={this.handleInput}
@@ -138,6 +151,12 @@ class ToDoList extends React.Component {
             value={this.state.dateDue}
             className="input"
           />
+          <select onChange={this.handlePriority}>
+            <option value=""></option>
+            <option value="!">!</option>
+            <option value="!!">!!</option>
+            <option value="!!!">!!!</option>
+          </select>
           <button>Submit</button>
         </form>
         <ul id="list">
@@ -146,7 +165,7 @@ class ToDoList extends React.Component {
               <li key={item.task}>
                 <p>
                   {`
-                  ${item.task} | ${item.DateDue} |`}
+                  ${item.task} | ${item.DateDue} |  ${item.priority}`}
                   <button
                     id={item.task}
                     className="listButton"
