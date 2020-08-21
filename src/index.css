@@ -26,16 +26,39 @@ h1 {
 }
 
 .form {
-  margin-left: 12cm;
+  margin-left: 2cm;
   padding-bottom: 1cm;
 }
 
 h2 {
   text-align: center;
-  padding-bottom: 0.5cm;
 }
 
 li {
   margin-left: 1cm;
   margin-bottom: 0.5cm;
 }
+
+#saveButton {
+  text-align: center;
+  padding-bottom: 0.5cm;
+}
+
+.button {
+}
+
+img {
+  display: block;
+  height: 4cm;
+  width: 4cm;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.input {
+  display: block;
+  padding-bottom: 3px;
+}
+
+border: solid 2px red;
